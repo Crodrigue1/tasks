@@ -21,11 +21,16 @@ function App(): JSX.Element {
                     <li>Fish</li>
                 </ul>
             </p>
-            <div>
+            <div className="App">
                 <Container>
                     <Row>
-                        <Col>Column 1</Col>
-                        <Col>Column 2</Col>
+                        <Col>
+                            <h2 className="App-rectangle">Column 1,</h2>
+                        </Col>
+
+                        <Col>
+                            <h3 className="App-rectangle">Column 2</h3>
+                        </Col>
                     </Row>
                 </Container>
             </div>
