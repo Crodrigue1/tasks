@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import "./App.css";
 
 function App(): JSX.Element {
@@ -6,13 +7,8 @@ function App(): JSX.Element {
         <div className="App">
             <h1>Header for App</h1>
             <header className="App-header">
-                UD CISC275 with React Hooks and TypeScript, Collin Rodrigue
+                COS420 with React Hooks and TypeScript, Collin Rodrigue
             </header>
-            COS420, Hello World
-            <p>
-                Edit <code>src/App.tsx</code> and save. This page will
-                automatically reload.
-            </p>
         </div>
     );
 }
