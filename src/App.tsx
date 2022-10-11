@@ -9,6 +9,11 @@ function App(): JSX.Element {
             <header className="App-header">
                 COS420 with React Hooks and TypeScript, Collin Rodrigue
             </header>
+            <div>
+                <Button onClick={() => console.log("Hello World")}>
+                    Log Hello World
+                </Button>
+            </div>
             <p>
                 <ul>
                     <li>Dogs</li>
