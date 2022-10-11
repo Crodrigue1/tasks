@@ -5,9 +5,9 @@ import "./App.css";
 function App(): JSX.Element {
     return (
         <div className="App">
-            <h1>Header for App</h1>
+            <h1>heading</h1>
             <header className="App-header">
-                COS420 with React Hooks and TypeScript, Collin Rodrigue
+                COS420,There is a header, Collin Rodrigue,
             </header>
             <div>
                 <Button onClick={() => console.log("Hello World!")}>
