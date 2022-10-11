@@ -10,7 +10,7 @@ function App(): JSX.Element {
                 COS420 with React Hooks and TypeScript, Collin Rodrigue
             </header>
             <div>
-                <Button onClick={() => console.log("Hello World")}>
+                <Button onClick={() => console.log("Hello World!")}>
                     Log Hello World
                 </Button>
             </div>
