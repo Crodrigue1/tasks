@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "./App.css";
 
 function App(): JSX.Element {
@@ -21,6 +21,14 @@ function App(): JSX.Element {
                     <li>Fish</li>
                 </ul>
             </p>
+            <div>
+                <Container>
+                    <Row>
+                        <Col>Column 1</Col>
+                        <Col>Column 2</Col>
+                    </Row>
+                </Container>
+            </div>
         </div>
     );
 }
