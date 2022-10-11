@@ -34,6 +34,9 @@ function App(): JSX.Element {
                     </Row>
                 </Container>
             </div>
+            <div>
+                <img src="public\coast.jpg" alt="Coast" />
+            </div>
         </div>
     );
 }
