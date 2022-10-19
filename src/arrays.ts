@@ -25,7 +25,11 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const arr = [...numbers];
+    const newarr = arr.map(
+        (newarr: number): number => newarr + newarr + newarr
+    );
+    return newarr;
 }
 
 /**
