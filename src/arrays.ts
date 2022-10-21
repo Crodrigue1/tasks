@@ -133,5 +133,16 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const arr = [...values];
+    let nums = 0;
+    const nextarr = arr.findIndex((num: number) =>
+        (nums += num) ? num <= 0 : num
+    );
+    if (nextarr == -1) {
+        arr.push(nums);
+    } else {
+        let final = Math.abs(arr[nextarr]);
+        arr.splice(nextarr + 1, 0, nums + final);
+    }
+    return arr;
 }
