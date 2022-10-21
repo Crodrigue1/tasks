@@ -70,7 +70,14 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const arr = [...messages];
+    const newarr = arr.map((strname: string): string =>
+        strname[strname.length - 1] == "!" ? strname.toUpperCase() : strname
+    );
+    const nextarr = newarr.filter(
+        (quest: string): boolean => quest[quest.length - 1] != "?"
+    );
+    return nextarr;
 };
 
 /**
@@ -78,8 +85,9 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    m;
-    return 0;
+    const arr = [...words];
+    const size = arr.filter((str: string): boolean => !(str.length >= 4));
+    return size.length;
 }
 
 /**
@@ -88,7 +96,13 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const arr = [...colors];
+    if (arr.length === 0) return true;
+    const newarr = arr.every(
+        (type: string): boolean =>
+            type === "red" || type === "green" || type === "blue"
+    );
+    return newarr;
 }
 
 /**
@@ -99,7 +113,14 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    const arr = [...addends];
+    if (arr.length == 0) return "0=0";
+    let answer = "";
+    arr.map((num: number): string => (answer += num.toString() + "+"));
+    let eye = 0;
+    arr.map((nums: number): number => (eye += nums));
+    const eyes = eye.toString() + "=";
+    return eyes + answer.slice(0, answer.length - 1);
 }
 
 /**
