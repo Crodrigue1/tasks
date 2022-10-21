@@ -37,7 +37,11 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const arr = [...numbers];
+    const newarr = arr.map((newarr: string): number => parseInt(newarr));
+    const nextarr = newarr.map((num: number): number => (isNaN(num) ? 0 : num));
+
+    return nextarr;
 }
 
 /**
@@ -65,6 +69,7 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
+    m;
     return 0;
 }
 
