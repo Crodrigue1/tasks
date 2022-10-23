@@ -1,3 +1,4 @@
+import { isQuestion } from "./functions";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
@@ -122,7 +123,11 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const newq = {
+        ...question,
+        published: question.published ? false : true
+    };
+    return newq;
 }
 
 /**
@@ -132,7 +137,13 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const newq = {
+        ...oldQuestion,
+        name: "Copy of " + oldQuestion.name,
+        id: id,
+        published: false
+    };
+    return newq;
 }
 
 /**
