@@ -82,7 +82,26 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    const name = "# " + question.name;
+    const body = question.body;
+    if (question.type == "short_answer_question") {
+        return name + "\n" + body;
+    } else {
+        return (
+            name +
+            "\n" +
+            body +
+            "\n" +
+            "- " +
+            question.options[0] +
+            "\n" +
+            "- " +
+            question.options[1] +
+            "\n" +
+            "- " +
+            question.options[2]
+        );
+    }
 }
 
 /**
@@ -90,7 +109,11 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const newq = {
+        ...question,
+        name: newName
+    };
+    return newq;
 }
 
 /**
