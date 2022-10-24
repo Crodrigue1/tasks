@@ -1,5 +1,10 @@
+import { queryByTestId } from "@testing-library/react";
+import { builtinModules } from "module";
+import { type } from "os";
+import { isQuestion } from "./functions";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -20,7 +25,7 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
     const arr = questions.filter(
         (num: Question): boolean =>
-            num.body == "" && num.expected == "" && num.options.length == 0
+            num.body === "" && num.expected === "" && num.options.length === 0
     );
     return arr;
 }
@@ -33,8 +38,14 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
-    const quest = questions.find((num: Question): boolean => num.id == id);
-    return null;
+    const arr = questions.find(
+        (question: Question): boolean => question.id === id
+    );
+    if (arr != null) {
+        return arr;
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -94,7 +105,23 @@ id,name,options,points,published
  * Check the unit tests for more examples!
  */
 export function toCSV(questions: Question[]): string {
-    return "";
+    const firstline = "id,name,options,points,published";
+    let textbody = "";
+    questions.map(
+        (num: Question): string =>
+            (textbody +=
+                num.id.toString() +
+                "," +
+                num.name +
+                "," +
+                num.options.length.toString() +
+                "," +
+                num.points.toString() +
+                "," +
+                num.published +
+                "\n")
+    );
+    return firstline + "\n" + textbody.slice(0, -1);
 }
 
 /**
@@ -103,7 +130,15 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    const arr: Answer[] = questions.map(
+        (num: Question): Answer => ({
+            questionId: num.id,
+            text: "",
+            submitted: false,
+            correct: false
+        })
+    );
+    return arr;
 }
 
 /***
@@ -111,7 +146,13 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    return [];
+    const arr = questions.map(
+        (num: Question): Question => ({
+            ...num,
+            published: true
+        })
+    );
+    return arr;
 }
 
 /***
@@ -119,7 +160,15 @@ export function publishAll(questions: Question[]): Question[] {
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
 export function sameType(questions: Question[]): boolean {
-    return false;
+    if (questions.length == 0) {
+        return true;
+    } else {
+        const starting = questions[0].type;
+        const arr = questions.every(
+            (num: Question): boolean => num.type == starting
+        );
+        return arr;
+    }
 }
 
 /***
@@ -133,7 +182,7 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    return [];
+    return [...questions, makeBlankQuestion(id, name, type)];
 }
 
 /***
@@ -146,7 +195,13 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    const arr = questions.map((num) => {
+        if (num.id === targetId) {
+            return { ...num, name: newName };
+        }
+        return num;
+    });
+    return arr;
 }
 
 /***
@@ -161,7 +216,21 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const arr = questions.map((num) => {
+        if (num.id === targetId) {
+            return { ...num, type: newQuestionType };
+        }
+        return num;
+    });
+    const newarr = arr.map((num) => {
+        if (num.id === targetId) {
+            if (num.type != "multiple_choice_question") {
+                return { ...num, options: [] };
+            }
+        }
+        return num;
+    });
+    return newarr;
 }
 
 /**
