@@ -1,10 +1,11 @@
 import { queryByTestId } from "@testing-library/react";
 import { builtinModules } from "module";
 import { type } from "os";
+import { urlToHttpOptions } from "url";
 import { isQuestion } from "./functions";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -25,7 +26,7 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
     const arr = questions.filter(
         (num: Question): boolean =>
-            num.body === "" && num.expected === "" && num.options.length === 0
+            num.body !== "" || num.expected !== "" || num.options.length !== 0
     );
     return arr;
 }
@@ -216,21 +217,17 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    const arr = questions.map((num) => {
+    const arr = questions.map((num: Question): Question => {
         if (num.id === targetId) {
-            return { ...num, type: newQuestionType };
-        }
-        return num;
-    });
-    const newarr = arr.map((num) => {
-        if (num.id === targetId) {
-            if (num.type != "multiple_choice_question") {
-                return { ...num, options: [] };
+            if (newQuestionType != "multiple_choice_question") {
+                return { ...num, type: newQuestionType, options: [] };
+            } else {
+                return { ...num, type: newQuestionType };
             }
         }
         return num;
     });
-    return newarr;
+    return arr;
 }
 
 /**
@@ -249,7 +246,20 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    const arr = questions.map((num: Question): Question => {
+        if (num.id === targetId) {
+            if (targetOptionIndex === -1) {
+                return { ...num, options: [...num.options, newOption] };
+            } else {
+                const newarr = [...num.options];
+                newarr.splice(targetOptionIndex, 1, newOption);
+                return { ...num, options: newarr };
+            }
+        } else {
+            return { ...num };
+        }
+    });
+    return arr;
 }
 
 /***
@@ -263,5 +273,10 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const arr = [...questions];
+    const ind = questions.findIndex(
+        (num: Question): boolean => num.id === targetId
+    );
+    arr.splice(ind + 1, 0, duplicateQuestion(newId, questions[ind]));
+    return arr;
 }
