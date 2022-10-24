@@ -60,14 +60,20 @@ export function getNames(questions: Question[]): string[] {
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    let pts = 0;
+    questions.map((num: Question): number => (pts += num.points));
+    return pts;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
  */
 export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
+    let pts = 0;
+    questions.map((num: Question): number =>
+        num.published == true ? (pts += num.points) : 1
+    );
+    return pts;
 }
 
 /***
